@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Piggy LoveBot 💕</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: absolute;
+            color: #ff4d88;
+            font-size: 20px;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+
+        .login, .chat-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            width: 350px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .messages {
+            height: 250px;
+            overflow-y: auto;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bot, .user {
+            margin: 5px 0;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .bot { background: #ffe6f0; align-self: flex-start; }
+        .user { background: #d1e7ff; align-self: flex-end; }
+
+        input {
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            width: 70%;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 10px;
+            background: #ff4d88;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover { background: #e6005c; }
+
+        .chat-container { display: none; }
+    </style>
+</head>
+<body>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Login Screen -->
+<div class="login">
+    <div class="box">
+        <h2>Enter Secret Password 🐷💕</h2>
+        <input type="password" id="password" placeholder="Hint: Our first meeting place">
+        <br><br>
+        <button onclick="checkPassword()">Login</button>
+        <p id="error" style="color:red;"></p>
+    </div>
+</div>
+
+<!-- Chat Screen -->
+<div class="chat-container">
+    <div class="box">
+        <h3>Piggy's LoveBot 🐷💖</h3>
+        <div class="messages" id="messages"></div>
+        <input type="text" id="userInput" placeholder="Type something Piggy...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    const correctPassword = "crown interior";
+
+    function checkPassword() {
+        let pass = document.getElementById("password").value.toLowerCase();
+        if(pass === correctPassword) {
+            document.querySelector(".login").style.display = "none";
+            document.querySelector(".chat-container").style.display = "flex";
+            document.getElementById("bgMusic").play();
+            addMessage("LoveBot: Welcome Piggy 🐷💕 Crown Interior changed my life forever 💖", "bot");
+        } else {
+            document.getElementById("error").innerText = "Wrong password Piggy 😜 Try again!";
+        }
+    }
+
+    function sendMessage() {
+        let input = document.getElementById("userInput");
+        let message = input.value.toLowerCase();
+        if(message === "") return;
+
+        addMessage("You: " + input.value, "user");
+
+        let response = getBotResponse(message);
+        setTimeout(() => {
+            addMessage("LoveBot: " + response, "bot");
+        }, 500);
+
+        input.value = "";
+    }
+
+    function addMessage(text, className) {
+        let messages = document.getElementById("messages");
+        let div = document.createElement("div");
+        div.className = className;
+        div.innerText = text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function getBotResponse(input) {
+        if(input.includes("hi") || input.includes("hello"))
+            return "Hello my cutest Piggy 🐷💕";
+
+        if(input.includes("love"))
+            return "Piggy I love you more than anything in this world ❤️";
+
+        if(input.includes("miss"))
+            return "I miss you like crazy Piggy 🥺";
+
+        if(input.includes("sad"))
+            return "No sadness allowed for my Piggy 🤗💖";
+
+        if(input.includes("future"))
+            return "Future plan: You + Me + Forever ♾️💞";
+
+        if(input.includes("where did we meet"))
+            return "We met at Crown Interior 💫 Best decision of my life 💕";
+
+        return "Piggy you are my favorite notification forever 💌💖";
+    }
+
+    /* Floating Hearts Generator */
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => { heart.remove(); }, 6000);
+    }
+
+    setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
